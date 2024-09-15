@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POST and GET Request Example</title>
+    <script>
+        // Function to send a POST request
+        function sendPostRequest() {
+            const inputData = document.getElementById('inputBox').value;
+            
+            fetch('https://example.com/api/post', { // Replace with your POST endpoint
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: inputData })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('POST request success:', data);
+                // Optionally call the get request after post
+                getResponse();
+            })
+            .catch(error => {
+                console.error('Error in POST request:', error);
+            });
+        }
+
+        // Function to send a GET request and display the result
+        function getResponse() {
+            fetch('https://example.com/api/get') // Replace with your GET endpoint
+            .then(response => response.json())
+            .then(data => {
+                console.log('GET request success:', data);
+                document.getElementById('outputBox').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error('Error in GET request:', error);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>POST and GET Request Example</h1>
+    
+    <div>
+        <label for="inputBox">Input:</label>
+        <input type="text" id="inputBox" placeholder="Enter data to post">
+        <button onclick="sendPostRequest()">Send POST Request</button>
+    </div>
+
+    <div>
+        <h2>GET Request Result:</h2>
+        <pre id="outputBox">Output will be displayed here...</pre>
+    </div>
+</body>
+</html>

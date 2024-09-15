@@ -1,4 +1,4 @@
-module frontend
+module backend-service
 
 go 1.22.4
 
