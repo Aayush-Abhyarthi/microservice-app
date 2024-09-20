@@ -7,6 +7,11 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
+type RequestData struct {
+	UserID   string `json:"userId"`
+	Password string `json:"password"`
+}
+
 func main() {
 
 	router := chi.NewRouter()

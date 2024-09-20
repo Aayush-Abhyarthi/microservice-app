@@ -3,56 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POST and GET Request Example</title>
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .output-box {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            min-height: 50px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="userId">User ID</label>
+            <input type="text" id="userId" name="userId" placeholder="Enter your User ID" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+
+            <button type="button" class="login-btn" onclick="submitLogin()">Login</button>
+        </form>
+
+        <div class="output-box" id="outputBox">
+            <!-- Output will appear here -->
+        </div>
+    </div>
+
     <script>
-        // Function to send a POST request
-        function sendPostRequest() {
-            const inputData = document.getElementById('inputBox').value;
-            
-            fetch('https://example.com/api/post', { // Replace with your POST endpoint
+        function submitLogin() {
+            var userId = document.getElementById('userId').value;
+            var password = document.getElementById('password').value;
+            var outputBox = document.getElementById('outputBox');
+
+            // Create payload to send to the backend
+            var payload = {
+                userId: userId,
+                password: password
+            };
+
+            // Send POST request to the server
+            fetch('/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ data: inputData })
+                body: JSON.stringify(payload)
             })
-            .then(response => response.json())
+            .then(response => response.json())  // Expect JSON response
             .then(data => {
-                console.log('POST request success:', data);
-                // Optionally call the get request after post
-                getResponse();
+                // Display the response message from the backend
+                outputBox.textContent = data.message;
             })
             .catch(error => {
-                console.error('Error in POST request:', error);
-            });
-        }
-
-        // Function to send a GET request and display the result
-        function getResponse() {
-            fetch('https://example.com/api/get') // Replace with your GET endpoint
-            .then(response => response.json())
-            .then(data => {
-                console.log('GET request success:', data);
-                document.getElementById('outputBox').innerText = JSON.stringify(data, null, 2);
-            })
-            .catch(error => {
-                console.error('Error in GET request:', error);
+                console.error('Error:', error);
+                outputBox.textContent = "An error occurred. Please try again.";
             });
         }
     </script>
-</head>
-<body>
-    <h1>POST and GET Request Example</h1>
-    
-    <div>
-        <label for="inputBox">Input:</label>
-        <input type="text" id="inputBox" placeholder="Enter data to post">
-        <button onclick="sendPostRequest()">Send POST Request</button>
-    </div>
 
-    <div>
-        <h2>GET Request Result:</h2>
-        <pre id="outputBox">Output will be displayed here...</pre>
-    </div>
 </body>
 </html>
