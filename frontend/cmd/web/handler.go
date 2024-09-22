@@ -4,11 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"text/template"
 	"time"
-
-	"golang.org/toolchain/src/math/rand"
 )
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
@@ -60,17 +59,45 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 		}
 		defer resp.Body.Close()
 
-		fmt.Println("Response status:", resp.Status)
-		
-		rand.Seed(time.Now().UnixNano())
-		randomValue := rand.Intn(100) 
+		fmt.Println("Authenticating.... Please wait!!!!")
+		time.Sleep(2 * time.Second)
 
-	
-		responseMessage := fmt.Sprintf("Hello, %s! Your random value is: %d", requestData.UserID, randomValue)
+		if(mapVal[requestData.UserID]==true){
 
-		
-		responseData := ResponseData{Message: responseMessage}
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(responseData)
+			fmt.Println("User authenticated")
+
+		}else{
+			fmt.Println("User not authenticated")
+		}
+
+	}
+}
+
+func handleLogin(w http.ResponseWriter, r *http.Request){
+
+	if(r.Method == http.MethodPost){
+
+		fmt.Println("In the handleLogin function")
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			http.Error(w, "Cannot read request body", http.StatusBadRequest)
+			return
+		}
+		defer r.Body.Close()
+
+		var dataTemp ResponseData
+
+		err = json.Unmarshal(body, &dataTemp)
+		if err != nil {
+			http.Error(w, "Invalid JSON", http.StatusBadRequest)
+			return
+		}
+
+		fmt.Printf("Received object from backend: %+v\n", dataTemp)
+		if mapVal == nil {
+			mapVal = make(map[string]bool)  // Initialize the map
+		}
+		mapVal[dataTemp.UserID]=dataTemp.IsValid
+		fmt.Println("Successfully executed the handleLogin function")
 	}
 }

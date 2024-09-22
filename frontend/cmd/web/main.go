@@ -14,13 +14,18 @@ type RequestData struct {
 }
 
 type ResponseData struct {
-	Message string `json:"message"`
+	UserID string `json:"userID"`
+	IsValid bool `json:"isValid"`
 }
+
+var mapVal map[string]bool
+
 
 func main() {
 	router := chi.NewRouter()
 	router.Get("/", handleHome)
 	router.Post("/", handleHome)
+	router.Post("/login", handleLogin)
 
 	server := &http.Server{
 		Addr:    ":3000",
