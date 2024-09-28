@@ -1,4 +1,4 @@
-module frontend
+module entry-point
 
 go 1.22.4
 
