@@ -18,3 +18,6 @@ start_all_servers:
 	make start_server2 &
 	make start_server3 &
 	wait
+
+stop_all_servers:
+	pkill -f "go run"

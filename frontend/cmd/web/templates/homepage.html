@@ -3,120 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Login Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
         }
-
-        .login-container {
+        .container {
             background-color: white;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 300px;
         }
-
-        h2 {
+        h1 {
             text-align: center;
-            margin-bottom: 20px;
         }
-
         label {
+            margin-bottom: 5px;
             display: block;
-            margin: 10px 0 5px;
         }
-
-        input[type="text"],
-        input[type="password"] {
+        input[type="text"], input[type="password"] {
             width: 100%;
             padding: 10px;
-            margin-bottom: 10px;
+            margin: 5px 0 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-
-        .output-box {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
-            min-height: 50px;
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
+        input[type="submit"] {
+            background-color: #28a745;
             color: white;
             border: none;
+            padding: 10px;
             border-radius: 4px;
             cursor: pointer;
+            width: 100%;
         }
-
-        .login-btn:hover {
-            background-color: #45a049;
+        input[type="submit"]:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
 
-    <div class="login-container">
-        <h2>Login</h2>
-        <form id="loginForm">
-            <label for="userId">User ID</label>
-            <input type="text" id="userId" name="userId" placeholder="Enter your User ID" required>
+<div class="container">
+    <h1>Login</h1>
+    <form method="POST" action="/">
+        <label for="userId">UserId:</label>
+        <input type="text" id="userId" name="userId" required>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+        <label for="password">password:</label>
+        <input type="password" id="password" name="password" required>
 
-            <button type="button" class="login-btn" onclick="submitLogin()">Login</button>
-        </form>
-
-        <div class="output-box" id="outputBox">
-            <!-- Output will appear here -->
-        </div>
-    </div>
-
-    <script>
-        function submitLogin() {
-            var userId = document.getElementById('userId').value;
-            var password = document.getElementById('password').value;
-            var outputBox = document.getElementById('outputBox');
-
-            // Create payload to send to the backend
-            var payload = {
-                userId: userId,
-                password: password
-            };
-
-            // Send POST request to the server
-            fetch('/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => response.json())  // Expect JSON response
-            .then(data => {
-                // Display the response message from the backend
-                outputBox.textContent = data.message;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                outputBox.textContent = "An error occurred. Please try again.";
-            });
-        }
-    </script>
+        <input type="submit" value="Login">
+    </form>
+</div>
 
 </body>
 </html>

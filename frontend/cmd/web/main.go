@@ -25,7 +25,6 @@ func main() {
 	router := chi.NewRouter()
 	router.Get("/", handleHome)
 	router.Post("/", handleHome)
-	router.Post("/login", handleLogin)
 
 	server := &http.Server{
 		Addr:    ":3000",

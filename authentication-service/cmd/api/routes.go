@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -35,29 +34,19 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 
 		authenticationPayload := ResponseData{UserID: dataTemp.UserID ,IsValid: val }
 
+		fmt.Println("The response object to be sent to backend")
+		fmt.Println(authenticationPayload)
+
 		//
 
-			url := "http://localhost:8000/authres"
-			jsonDataTemp,err := json.Marshal(authenticationPayload)
-			if(err!=nil){
-				fmt.Println("Error occured during marshaling")
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+		
+			// Encode and send JSON response
+			if err := json.NewEncoder(w).Encode(authenticationPayload) 
+			err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
-
-			req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonDataTemp))
-			if err != nil {
-				fmt.Println("Error creating request:", err)
-				return
-			}
-
-			req.Header.Set("Content-Type", "application/json")
-
-			client := &http.Client{}
-			resp, err := client.Do(req)
-			if err != nil {
-				fmt.Println("Error sending request:", err)
-				return
-			}
-			defer resp.Body.Close()
 		//
 
 

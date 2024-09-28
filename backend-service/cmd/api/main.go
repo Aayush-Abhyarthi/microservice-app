@@ -26,7 +26,6 @@ func main() {
 
 	router.Get("/", handleHome)
 	router.Post("/", handleHome)
-	router.Post("/authres", handleAuth)
 
 	server := &http.Server{
 		Addr:    ":8000",
