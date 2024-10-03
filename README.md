@@ -19,5 +19,8 @@ Following diagram shows the basic architecture of the components of the applicat
 
 - The master database is what the user should provide to the application. If user does not have a master database and wants to start using the service, we provide the code in form of the database service.(However we believe user has their own infrastructure for the database.)
 
-- We have a provision to add a cashing application attached to the database if the user opt for. You can find the code for the cashing application [here](https://github.com/Aayush-Abhyarthi/caching-application). (This service is still under development, however some of the basic functionalities can still be used)
+- We have a provision to add a caching application attached to the database if the user opt for. You can find the code for the cashing application [here](https://github.com/Aayush-Abhyarthi/caching-application). (This service is still under development, however some of the basic functionalities can still be used)
+
+- `docker build . -t myserver:latest` 
+- `docker run -it -p 8000:8000 myserver:latest` 
 

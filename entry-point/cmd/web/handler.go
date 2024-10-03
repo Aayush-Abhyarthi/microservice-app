@@ -9,7 +9,7 @@ import (
 	"text/template"
 )
 
-var templates = template.Must(template.ParseFiles("templates/homepage.html", "templates/test.html"))
+var templates = template.Must(template.ParseFiles("templates/homepage.html", "templates/loginpage.html"))
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
 
@@ -57,7 +57,7 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 		if respData.IsValid {
 			// Serve the success template
 			fmt.Println("Inside the condition")
-			err := templates.ExecuteTemplate(w, "test.html", nil)
+			err := templates.ExecuteTemplate(w, "loginpage.html", respData )
 			if err != nil {
 				http.Error(w, "Error loading success page", http.StatusInternalServerError)
 				fmt.Println("Error executing success template:", err)
