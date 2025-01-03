@@ -57,7 +57,31 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("JSON received successfully"))
 
 	}
+}
 
+func handleSignup(w http.ResponseWriter, r *http.Request){
 
+	if r.Method == http.MethodPost {
+
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			http.Error(w, "Cannot read request body", http.StatusBadRequest)
+			return
+		}
+		defer r.Body.Close()
+
+		err = json.Unmarshal(body, &dataStorage)
+		if err != nil {
+			http.Error(w, "Invalid JSON", http.StatusBadRequest)
+			return
+		}
+
+		fmt.Printf("Received object: %+v\n", dataTemp)
+
+		//Sending json to authentication-service
+
+		storeCreds(dataStorage)
+
+	}
 
 }

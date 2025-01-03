@@ -16,7 +16,14 @@ type ResponseData struct {
 	IsValid bool `json:"isValid"`
 }
 
+type SignUpData struct {
+	UserName string `json:"userId"`
+	Password string `json:"password"`
+	GUserName string `json:"githubusername"`
+}
+
 var dataTemp RequestData
+var dataStorage SignUpData
 
 func main(){
 
@@ -24,6 +31,8 @@ func main(){
 	router.Use(middleware.Logger)
 	router.Get("/",handleHome)
 	router.Post("/",handleHome)
+	router.Get("/signup", handleSignup)
+	router.Post("/signup", handleSignup)
 
 
 	server := &http.Server{

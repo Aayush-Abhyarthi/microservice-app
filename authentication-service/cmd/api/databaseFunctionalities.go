@@ -17,6 +17,10 @@ func validateCreds(sampledata RequestData) bool {
 
 }
 
+func storeCreds(sampleData SignUpData){
+	fmt.Println("stored the data")
+}
+
 func connectDB() (*sql.DB, error) {
 	dsn := "username:password@tcp(127.0.0.1:3306)/dbname"
 	db, err := sql.Open("mysql", dsn)

@@ -18,6 +18,12 @@ type ResponseData struct {
 	IsValid bool `json:"isValid"`
 }
 
+type SignUpData struct {
+	UserName string `json:"userId"`
+	Password string `json:"password"`
+	GUserName string `json:"githubusername"`
+}
+
 var mapVal map[string]bool
 
 
@@ -25,6 +31,8 @@ func main() {
 	router := chi.NewRouter()
 	router.Get("/", handleHome)
 	router.Post("/", handleHome)
+	router.Get("/signup", handleSignup)
+	router.Post("/signup", handleSignup)
 
 	server := &http.Server{
 		Addr:    ":3000",

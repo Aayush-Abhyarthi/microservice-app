@@ -49,5 +49,36 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(objectResponse)
 
 	}
+}
+
+func handleSignup(w http.ResponseWriter, r *http.Request){
+
+	if r.Method == http.MethodPost {
+
+		var reqD SignUpData
+		if err := json.NewDecoder(r.Body).Decode(&reqD); err != nil {
+			http.Error(w, "Bad request", http.StatusBadRequest)
+			return
+		}
+
+		fmt.Println(reqD)
+
+		// send reqD to authorization-service
+
+		jsonData, err := json.Marshal(reqD)
+		if err != nil {
+			fmt.Println("Error occured")
+		}
+
+		url := "http://localhost:8080/signup"
+
+		resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
+		if err != nil {
+			log.Fatalf("Error making request: %v", err)
+		}
+
+		fmt.Println(resp)
+
+	}
 
 }

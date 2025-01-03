@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Sign Up Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,38 +48,57 @@
         input[type="submit"]:hover {
             background-color: #218838;
         }
-        .signup-btn {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px; /* Added margin to separate it from the submit button */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
         }
-        .signup-btn:hover {
-            background-color: #0056b3;
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Login</h1>
-    <form method="POST" action="/">
-        <label for="userId">UserId:</label>
-        <input type="text" id="userId" name="userId" required>
+    <h1>Sign Up</h1>
+    <form id="signup-form" method="POST" action="/signup">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
 
-        <input type="submit" value="Login">
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+
+        <label for="github-username">GitHub Username:</label>
+        <input type="text" id="github-username" name="github-username" required>
+
+        <input type="submit" value="Sign Up">
     </form>
 
-    <!-- Create Account Button with color and margin -->
-    <button class="signup-btn" onclick="window.location.href='/signup'">Create an Account</button>
+    <div class="back-link">
+        <p>Already have an account? <a href="/">Log in here</a></p>
+    </div>
 </div>
+
+<script>
+    // Form validation before submitting
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match.');
+            event.preventDefault(); // Prevent form submission
+        }
+    });
+</script>
 
 </body>
 </html>

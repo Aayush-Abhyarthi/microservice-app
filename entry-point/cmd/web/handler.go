@@ -9,7 +9,7 @@ import (
 	"text/template"
 )
 
-var templates = template.Must(template.ParseFiles("templates/homepage.html", "templates/loginpage.html"))
+var templates = template.Must(template.ParseFiles("templates/homepage.html", "templates/loginpage.html", "templates/signup.html"))
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
 
@@ -67,5 +67,42 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("User not authenticated"))
 		}
 
+	}
+}
+
+func handleSignup(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == http.MethodGet {
+		err := templates.ExecuteTemplate(w, "signup.html", nil)
+		if err != nil {
+			http.Error(w, "Error loading the HTML template", http.StatusInternalServerError)
+			fmt.Println("Error parsing HTML template:", err)
+			return
+		}
+		return
+	}
+
+	if r.Method == http.MethodPost {
+
+		var signUpData SignUpData
+		signUpData.UserName = r.FormValue("username")
+		signUpData.Password = r.FormValue("password")
+		signUpData.GUserName = r.FormValue("github-username") 
+
+		fmt.Print(signUpData)
+
+		sendingDataJson, err := json.Marshal(signUpData)
+		if err != nil {
+			fmt.Println("An error occured while marshaling to json.")
+		}
+
+		url := "http://localhost:8000/signup"
+
+		resp, err := http.Post(url, "application/json", bytes.NewBuffer(sendingDataJson))
+		if err != nil {
+			fmt.Println("Error occured while doing post request")
+		}
+
+		defer resp.Body.Close()
 	}
 }
