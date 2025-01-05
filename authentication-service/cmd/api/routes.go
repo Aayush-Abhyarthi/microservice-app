@@ -62,6 +62,7 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 func handleSignup(w http.ResponseWriter, r *http.Request){
 
 	if r.Method == http.MethodPost {
+		fmt.Println("In here")
 
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -76,7 +77,7 @@ func handleSignup(w http.ResponseWriter, r *http.Request){
 			return
 		}
 
-		fmt.Printf("Received object: %+v\n", dataTemp)
+		fmt.Printf("Received object: %+v\n", dataStorage)
 
 		//Sending json to authentication-service
 

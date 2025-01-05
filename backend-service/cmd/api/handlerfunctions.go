@@ -51,7 +51,7 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func handleSignup(w http.ResponseWriter, r *http.Request){
+func handleSignup(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodPost {
 
@@ -63,6 +63,7 @@ func handleSignup(w http.ResponseWriter, r *http.Request){
 
 		fmt.Println(reqD)
 
+		fmt.Println("Sending data to auth service")
 		// send reqD to authorization-service
 
 		jsonData, err := json.Marshal(reqD)

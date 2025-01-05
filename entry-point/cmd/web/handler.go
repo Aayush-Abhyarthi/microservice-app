@@ -104,5 +104,11 @@ func handleSignup(w http.ResponseWriter, r *http.Request) {
 		}
 
 		defer resp.Body.Close()
+
+		err = templates.ExecuteTemplate(w, "homepage.html",nil)
+			if err != nil {
+				http.Error(w, "Error loading success page", http.StatusInternalServerError)
+				fmt.Println("Error executing success template:", err)
+			}
 	}
 }
