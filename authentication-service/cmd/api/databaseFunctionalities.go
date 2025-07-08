@@ -11,20 +11,19 @@ import (
 func validateCreds(sampledata RequestData) bool {
 
 	fmt.Println("In the validate function")
-	if userValidation[sampledata.UserID]==true{
-		return true
+	n := len(userDataArray)
+	for i:=0;i<n;i++{
+		if(userDataArray[i].UserName == sampledata.UserID && userDataArray[i].Password == sampledata.Password){
+			return true
+		}
 	}
+
 	return false
-
-	// This function will interact with the master database to verify the credentials. First setup the database and then implement this function to interact with it.
-
 }
 
 func storeCreds(sampleData SignUpData){
 	fmt.Println("stored the data")
-	userValidation[sampleData.UserName]=true
-	pwdValidation[sampleData.UserName]=sampleData.Password
-	gUsername[sampleData.UserName]=sampleData.GUserName
+	userDataArray = append(userDataArray, sampleData)
 }
 
 func connectDB() (*sql.DB, error) {

@@ -24,15 +24,17 @@ type SignUpData struct {
 
 var dataTemp RequestData
 var dataStorage SignUpData
-var userValidation map[string]bool
-var pwdValidation map[string]string
-var gUsername map[string]string
+// var userValidation map[string]bool
+// var pwdValidation map[string]string
+// var gUsername map[string]string
+var userDataArray []SignUpData
 
 func main(){
 
-	userValidation = make(map[string]bool)
-	pwdValidation = make(map[string]string)
-	gUsername = make(map[string]string)
+	// userValidation = make(map[string]bool)
+	// pwdValidation = make(map[string]string)
+	// gUsername = make(map[string]string)
+	userDataArray = make([]SignUpData, 0)
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)
 	router.Get("/",handleHome)
