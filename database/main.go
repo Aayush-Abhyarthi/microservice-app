@@ -7,10 +7,6 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func handleGetInfo(w http.ResponseWriter, r *http.Request){
-	w.Write([]byte("This is the value in the main file"))
-}
-
 func main(){
 
 	router := chi.NewRouter()
@@ -19,7 +15,7 @@ func main(){
 	router.Post("/", handleGetInfo)
 
 	server := &http.Server{
-		Addr: "80",
+		Addr: "8070",
 		Handler: router,
 	}
 
